@@ -1,3 +1,30 @@
 .App {
-    background-color: bisque;
+    display: grid;
+    grid-template-rows: 200px 200px 200px;
+    grid-template-columns: 1fr 1fr 1fr;
+    /*background-color: bisque;*/
+    /*padding: 30px;*/
+    /*display: flex;*/
+}
+.App > div {
+    margin-right: 50px;
+}
+
+.TooDoList {
+    grid-row-start: 3;
+    grid-column-start: 2;
+}
+
+.error {
+    border-color: red;
+}
+.errorMessage {
+    color: red;
+}
+
+.activeFilter {
+    background-color: aquamarine;
+}
+.isDone {
+    opacity: 0.5;
 }
