@@ -1,4 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button} from "@mui/material";
+import {IconButton, TextField} from "@material-ui/core";
+import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -12,8 +15,12 @@ export function AddItemForm(props: AddItemFormPropsType) {
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.charCode === 13) {
-            props.addItem(newTaskTitle);
-            setNewTitle("");
+            if (newTaskTitle.trim() !== "") {
+                props.addItem(newTaskTitle.trim());
+                setNewTitle("");
+            } else {
+                setError("Field is required")
+            }
         }
     }
     const [error, setError] = useState<string | null>(null);
@@ -21,20 +28,18 @@ export function AddItemForm(props: AddItemFormPropsType) {
         if (newTaskTitle.trim() !== "") {
             props.addItem(newTaskTitle.trim());
             setNewTitle("");
-        } else {
-            setError("Fiel is required")
-        }
+        } else { setError("Field is required") }
     };
     return (
         <div>
-            <input type="text"
+            <TextField type="text" id="standard-basic" variant="outlined" label="Type value:"
                    value={newTaskTitle}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
+                   error={!!error}
+                   helperText={error}
             />
-            <button onClick={addTaskHandler}>+</button>
-            {error && <div className="errorMessage">Field is required</div>}
+            <IconButton onClick={addTaskHandler} color={'primary'}><AddIcon /></IconButton>
         </div>
     )
 }
